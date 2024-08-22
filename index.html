@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.0/mqtt.min.js" integrity="sha512-byTyBa2WyMxse/xmaiQZFtLAlNtrAKEad5JGOE/xc9WnQJ1A/Dx72ax9j9H9fePm7fKZDBMC9Y63biwWWam8Qw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const options = {
+      connectTimeout: 4000,
+      clientId: 'mqttjs_' + Math.random().toString(16).substr(2, 8),
+      keepalive: 60,
+      clean: true,
+    }
+
+    const WEBSOCKET_URL = 'ws://iotCore.lat:8083/mqtt'
+
+    const client = mqtt.connect(WEBSOCKET_URL, options)
+
+    client.on('connect', () => {
+      console.log('Connect success')
+      client.subscribe('testtopic/#', { qos: 0 }, (error) => {
+        if (!error) {
+          console.log('Subscribe success')
+          client.publish('testtopic', `Hello mqtt ${Date.now()}`, { qos: 0, retain: false }, (error) => {
+            if (!error) {
+              console.log('Publish success')
+            } else {
+              console.log('Publish failed')
+            }
+          })
+        } else {
+          console.log('Subscribe failed')
+        }
+      })
+
+    })
+
+    client.on('message', ( topic, message) => {
+      console.log(`the topic is ${topic} an the message is  ${message}`)
+    })
+
+
+    client.on('reconnect', (error) => {
+      console.log('Reconnecting:', error)
+    })
+
+    client.on('error', (error) => {
+      console.log('Connect Error:', error)
+    })
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mqtt/5.10.0/mqtt.min.js" integrity="sha512-byTyBa2WyMxse/xmaiQZFtLAlNtrAKEad5JGOE/xc9WnQJ1A/Dx72ax9j9H9fePm7fKZDBMC9Y63biwWWam8Qw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+</head>
+<body>
+  <main class="p-4">
+    <div class="flex gap-4 mb-4">
+      <h1 class="text-bold text-[2rem]">Chat MQTT</h1>
+      <input id="username" placeholder="name" type="text" class="text-[2rem] ">
+    </div>
+    <div>
+      <div id="chatHistory" class="flex flex-col-reverse w-full h-96 shadow-[0_0_1px_1px_#000] px-2 py-1 mb-1 gap-2 overflow-y-auto">
+      </div>
+    </div>
+    <div>
+      <input 
+      onkeydown="if(event.key === 'Enter') sendMessage(event)"
+      type="text" placeholder="escribe tu codigo" class="w-full shadow-[0_0_1px_1px_#000] px-2 py-1">
+    </div>
+    <script src="./js/script.js"></script>
+  </main>
+</body>
+</html>
